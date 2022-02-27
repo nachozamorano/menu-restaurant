@@ -1,0 +1,8 @@
+{
+  "name": "Menu Restaurant",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue",
+  "id": "8a2ea23d"
+}
