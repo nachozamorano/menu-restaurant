@@ -1,0 +1,35 @@
+.size-img{
+  max-width: 185px;
+  max-height: 185px;
+}
+ion-img.size-img::part(image) {
+  border-radius: 10px;
+}
+.title-step{
+  font-weight: 900;
+  font-size: 30px;
+}
+.title-sub{
+  font-size: 23px;
+  font-weight: 800;
+  color:#1b1b1b;
+}
+.button-div{
+  float: right;
+  margin-right: 20px;
+}
+.text-description{
+  font-size: 15px;
+}
+.size-content{
+  max-height: 70%;
+}
+.total-amount{
+  margin-left: 20px;
+  margin-top: 15px;
+  display: inline-table;
+  font-weight: 600;
+}
+.style-back{
+  margin-right: 20px;
+}
