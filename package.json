@@ -1,6 +1,6 @@
 {
   "name": "menu-restaurant",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "vetur.validation.template": false,
   "scripts": {
