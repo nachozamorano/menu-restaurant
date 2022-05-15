@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
+import  PageNotFound from '../views/PageNotFound.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,6 +10,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/menu/:id',
     component: () => import ('../views/Segment.vue')
+  },
+  {
+    name: 'NotFound',
+    path: '/:pathMatch(.*)*',
+    component: PageNotFound
   }
 ]
 
