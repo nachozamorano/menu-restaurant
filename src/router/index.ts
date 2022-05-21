@@ -4,11 +4,7 @@ import  PageNotFound from '../views/PageNotFound.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '',
-    redirect: '/menu/Restaurant'
-  },
-  {
-    path: '/menu/:id',
+    path: '/:access',
     component: () => import ('../views/Segment.vue')
   },
   {

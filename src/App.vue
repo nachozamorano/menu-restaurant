@@ -22,6 +22,7 @@ export default defineComponent({
     PageNotFound
 },
       created: function (){
+        debugger
         var url = location.href.split("=")[1];
         if(typeof url != "undefined"){
           this.step ='main';
