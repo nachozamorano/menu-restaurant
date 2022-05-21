@@ -22,8 +22,7 @@ export default defineComponent({
     PageNotFound
 },
       created: function (){
-        console.log("pasa");
-        var url = this.$route.params.code;
+        var url = this.$route.query.access;
         if(typeof url != "undefined"){
           this.step ='main';
           var rev = ReverseMd5({
