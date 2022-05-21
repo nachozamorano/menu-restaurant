@@ -1,20 +1,22 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
+import  App from '../App.vue';
 import  PageNotFound from '../views/PageNotFound.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '',
-    redirect: '/menu/Restaurant'
+    path: '/access/:code',
+    name: 'App',
+    component: App
   },
   {
-    path: '/menu/:id',
-    component: () => import ('../views/Segment.vue')
-  },
-  {
-    name: 'NotFound',
-    path: '/:pathMatch(.*)*',
+    name: 'PageNotFound',
+    path: '/404',
     component: PageNotFound
+  },
+  {
+  path: "/:catchAll(.*)", // Unrecognized path automatically matches 404
+    redirect: '/404',
   }
 ]
 
