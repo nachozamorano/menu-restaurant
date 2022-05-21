@@ -1,6 +1,6 @@
 <template>
   <ion-app>
-      <ion-split-pane content-id="main-content" v-if="step=='main'">
+      <ion-split-pane content-id="main-content" ref="panel" v-if="step=='main'">
         <ion-router-outlet id="main-content"></ion-router-outlet>
       </ion-split-pane>
       <page-not-found v-else></page-not-found>
@@ -10,6 +10,7 @@
 <script>
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { HTTP } from './js/http-common';
 import PageNotFound from './views/PageNotFound.vue';
 import ReverseMd5 from 'reverse-md5';
 export default defineComponent({
@@ -33,15 +34,31 @@ export default defineComponent({
               maxLen: 90
           });
           var reverse = rev(url);
-          alert(reverse.str);
+          this.getDataRestaurant(reverse.str);
         }else{
           this.step ='error';
         }
       },
       data(){
         return{
-          step: ''
+          step: '',
+          posts: [],
+          errors: []
           }
+      },
+      methods: {
+        getDataRestaurant: function (id) {
+          HTTP.post(``, {
+            id: id
+          })
+          .then(response => {
+            console.log(response.data);
+            this.posts = response.data;
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+        }
       }
 });
 </script>

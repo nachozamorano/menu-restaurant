@@ -6,6 +6,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "start": "node server.js",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
@@ -19,7 +20,9 @@
     "@ionic/vue": "^6.0.0",
     "@ionic/vue-router": "^6.0.0",
     "@vue/cli-service-global": "^4.5.15",
+    "axios": "^0.27.2",
     "core-js": "^3.6.5",
+    "express": "^4.18.1",
     "reverse-md5": "0.0.5",
     "ts-md5": "^1.2.11",
     "vue": "^3.2.21",

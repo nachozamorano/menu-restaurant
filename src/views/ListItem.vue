@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref  } from 'vue';
+import { defineComponent } from 'vue';
 import { IonCheckbox, IonLabel, IonImg, IonBadge, IonToolbar, IonHeader, IonContent, IonItemDivider, IonList, IonTitle } from '@ionic/vue';
 import CardImg from './CardImg.vue'
 
