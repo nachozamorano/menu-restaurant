@@ -22,8 +22,8 @@ export default defineComponent({
     PageNotFound
 },
       created: function (){
-        debugger
-        var url = location.href.split("=")[1];
+        console.log("pasa");
+        var url = this.$route.params.code;
         if(typeof url != "undefined"){
           this.step ='main';
           var rev = ReverseMd5({
