@@ -1,9 +1,7 @@
-const express = require('express');
-const port = process.env.PORT || 8080;
+const servestatic = require('serve-static')
+const path = require('path')
+const express = require('express')
+const port = process.env.PORT || 3000;
 const app = express();
-app.use(express.static(__dirname + "/dist/"));
-app.get(/.*/, function(req, res){
-    res.sendFile(__dirname + "/dist/index.html");
-});
-app.listen(port);
-console.log('Server started....');
+app.use(servestatic(path.join(path.resolve(), 'dist')));
+app.listen(port, () => {console.log("API server started on " + port);});
