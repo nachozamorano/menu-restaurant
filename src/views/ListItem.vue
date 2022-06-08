@@ -7,7 +7,6 @@
   <ion-content class="ion-padding size-content">
     <ion-list v-for="(itm, i) in itemsList" :key="i">
       <ion-item-divider class="item-divider-list">
-        <ion-checkbox slot="start" @update:modelValue="itm.isChecked = $event" :modelValue="itm.isChecked" @click="$parent.updateAmount(itm.isChecked, itm.price)"></ion-checkbox>
         <ion-label class="ion-label-list" @click="selectedImg(itm)">
           <h1 size="large" class="title-sub">{{itm.name}}</h1>
           <p class="text-description">{{itm.description}}</p>
@@ -22,13 +21,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonCheckbox, IonLabel, IonImg, IonBadge, IonToolbar, IonHeader, IonContent, IonItemDivider, IonList, IonTitle } from '@ionic/vue';
+import { IonLabel, IonImg, IonBadge, IonToolbar, IonHeader, IonContent, IonItemDivider, IonList, IonTitle } from '@ionic/vue';
 import CardImg from './CardImg.vue'
 
 export default defineComponent({
   name: 'List-item',
   components: {
-    IonCheckbox, IonLabel, IonImg, IonBadge, IonToolbar, IonHeader, IonContent, IonItemDivider, IonList, IonTitle, CardImg
+    IonLabel, IonImg, IonBadge, IonToolbar, IonHeader, IonContent, IonItemDivider, IonList, IonTitle, CardImg
   },
   data(){
     return{

@@ -36,8 +36,7 @@ ion-img.size-img::part(image) {
   margin-right: 20px;
 }
 .logo-icon::part(image){
-  width: 50px;
-  border-radius: 100%;
+  width: 40px;
   margin-right: 1%;
   float: right;
 }
@@ -72,7 +71,7 @@ ion-img.card-img-model::part(image){
   border-radius: 10px;
 }
 .card-img-model{
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .close-card{
   float: right;
@@ -92,6 +91,8 @@ ion-img.card-img-model::part(image){
   padding-left:46px; 
   color:#666666; 
   font-size: 20px;
+  margin-top: 16px;
+  margin-bottom: 10px;
 }
 .close-icon{
   background-image: url(../icons/close-circle-outline.svg);
@@ -221,4 +222,73 @@ ion-note {
 
 ion-item.selected {
   --color: var(--ion-color-primary);
+}
+
+.vertical-center{
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* unnecessary styling properties */
+    max-width: 50%;
+    text-align: center;
+    opacity: 1;
+	  transition: opacity 1s;
+}
+.align-down-right{
+  bottom: 10%;
+  position: absolute;
+  right: 38%;
+  left: 38%;
+}
+.display-block{
+  display: block !important;
+}
+.border-detail{
+  -webkit-box-shadow: 4px 4px 5px #999;
+  box-shadow:  4px 4px 5px #999;
+  border-radius: 10px;
+  padding: 2px;
+  margin-bottom: 18px;
+  display: flex;
+
+}
+
+/*minus style*/
+.w-minus{
+  width: 70px;
+}
+.minusplusnumber {
+  font-weight: 600;
+  border:1px solid silver;
+  border-radius:5px;
+  background-color: #FFF;
+  margin:0 5px 0 5px;
+  display:inline-block;
+  user-select: none;
+}
+.minusplusnumber div {
+  display:inline-block;
+}
+.minusplusnumber #field_container input {
+  width:50px;
+  text-align-last: end;
+  font-size:15px;
+  padding:3px;
+  border:none;
+}
+.minusplusnumber .mpbtn {
+  padding:3px 10px 3px 10px;
+  cursor:pointer;
+  border-radius:5px;
+}
+.minusplusnumber .mpbtn:hover {
+  background-color:#DDD;
+}
+.minusplusnumber .mpbtn:active {
+  background-color:#c5c5c5;
+}
+.align-center{
+  text-align: center;
 }

@@ -6,7 +6,7 @@
             </ion-segment-button>
         </div>
     </ion-segment>
-    <ion-img :src="dataRestaurant.logo" class="logo-icon"></ion-img>
+    <ion-img src="/assets/icon/fast-food-outline.svg" class="logo-icon"></ion-img>
     <list-item :step-info="stepInfo" :items-list="itemsList" ref="list"></list-item>
     <div class="size-button-div">
         <ion-text class="total-amount">Monto: {{formatPrice(totalAmount)+" "+stepInfo.typeMoney}}</ion-text>
@@ -32,9 +32,6 @@ export default defineComponent({
     return{
        totalAmount:0,
        stepSelected: '001',
-       dataRestaurant:{
-          logo:"/assets/icon/logo2.jpg"
-       },
        step: [
         {
           name: 'Entrada',
