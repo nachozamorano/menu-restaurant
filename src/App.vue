@@ -1,8 +1,8 @@
 <template>
   <ion-app class="display-block">
-      <start-page :urlStart="urlStart" v-if="step=='start'"></start-page>
-      <segment-top v-else-if="step=='main'"></segment-top>
-      <page-not-found v-else-if="step=='error'"></page-not-found>
+      <start-page :urlStart="urlStart" v-if="step=='start'" ref="startPage"></start-page>
+      <segment-top v-else-if="step=='main'" ref="segment"></segment-top>
+      <page-not-found v-else-if="step=='error'" ref="error"></page-not-found>
   </ion-app>
 </template>
 
@@ -52,7 +52,7 @@ export default defineComponent({
             var reverse = rev(url);
             this.getDataRestaurant(reverse.str);
           }else{
-            this.step ='error';
+            this.step ='main';
           }
         },
         getDataRestaurant: function (id) {

@@ -15,7 +15,7 @@
         <ion-img :src="itm.img" class="size-img" @click="selectedImg(itm)"></ion-img>
       </ion-item-divider>
     </ion-list>
-    <card-img ref="cardImage" class="card-img" :data-selected="dataSelected"></card-img>
+    <card-img ref="cardImage" class="card-img" :value-minus="valueMinus" :data-selected="dataSelected"></card-img>
   </ion-content>
 </template>
 
@@ -31,7 +31,8 @@ export default defineComponent({
   },
   data(){
     return{
-      dataSelected:{}
+      dataSelected:{},
+      valueMinus:0
     }
   },
   props: {
@@ -55,6 +56,11 @@ export default defineComponent({
   },
   methods:{
     selectedImg (row: any){
+        if(typeof row.quantity != "undefined"){
+          this.valueMinus = row.quantity;
+        }else{
+          this.valueMinus = 0;
+        }
         this.dataSelected = row;
         (this.$refs['cardImage'] as any).setOpen(true);
     }

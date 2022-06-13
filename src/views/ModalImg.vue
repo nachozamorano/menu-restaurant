@@ -8,10 +8,10 @@
   <ion-content class="ion-padding">
     <div class="border-detail">
       <h4 class="description-title">Descripción:</h4>
-      <span class="text-description-card">{{data.description}}</span>
+      <span class="text-description-card">{{ data.description }}</span>
     </div>
     <div class="align-center">
-      <PlusMinusField></PlusMinusField>
+      <PlusMinusField ref="minus" :data="data" :value="valueMinus"></PlusMinusField>
     </div>
   </ion-content>
 </template>
@@ -24,8 +24,12 @@ import PlusMinusField from './PlusMinusField.vue'
 export default defineComponent({
   name: 'modal-img',
   props: {
-    data: { type: Object},
+    data: { type: Object },
+    valueMinus:{
+      type:Number,
+      default:0
+    }
   },
-  components: { IonContent, IonHeader, IonTitle, IonToolbar, IonImg, PlusMinusField}
+  components: { IonContent, IonHeader, IonTitle, IonToolbar, IonImg, PlusMinusField }
 });
 </script>
