@@ -10,7 +10,7 @@
         <ion-label class="ion-label-list" @click="selectedImg(itm)">
           <h1 size="large" class="title-sub">{{itm.name}}</h1>
           <p class="text-description">{{itm.description}}</p>
-          <ion-badge color="primary">{{$parent.formatPrice(itm.price)+" "+stepInfo.typeMoney}}</ion-badge>
+          <ion-badge color="primary" v-if="$parent != null">{{$parent.formatPrice(itm.price)+" "+stepInfo.typeMoney}}</ion-badge>
         </ion-label>
         <ion-img :src="itm.img" class="size-img" @click="selectedImg(itm)"></ion-img>
       </ion-item-divider>

@@ -56,7 +56,7 @@ export default defineComponent({
           }
         },
         getDataRestaurant: function (id) {
-          HTTP.post(``, {
+          HTTP.post('/api/restaurant', {
             id: id
           })
           .then(response => {
