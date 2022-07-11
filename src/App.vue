@@ -1,8 +1,8 @@
 <template>
   <ion-app class="display-block">
-      <start-page :urlStart="urlStart" v-if="step=='start'" ref="startPage"></start-page>
-      <segment-top v-else-if="step=='main'" ref="segment"></segment-top>
-      <page-not-found v-else-if="step=='error'" ref="error"></page-not-found>
+      <start-page :urlStart="urlStart" v-if="stepMain=='start'" ref="startPage"></start-page>
+      <segment-top v-else-if="stepMain=='main'" :step="stepAux" :items-list="itemsListAux" ref="segment"></segment-top>
+      <page-not-found v-else-if="stepMain=='error'" ref="error"></page-not-found>
   </ion-app>
 </template>
 
@@ -29,9 +29,10 @@ export default defineComponent({
       },
       data(){
         return{
-          step: 'start',
+          stepMain: 'start',
           urlStart: '/assets/icon/logo.png',
-          posts: [],
+          stepAux:[],
+          itemsListAux:[],
           errors: [],
           timeInitial: 2000
           }
@@ -40,7 +41,7 @@ export default defineComponent({
         startWeb: function (){
           var url = this.$route.query.access;
           if(typeof url != "undefined"){
-            this.step ='main';
+            this.stepMain ='main';
             var rev = ReverseMd5({
                 lettersUpper: true,
                 lettersLower: true,
@@ -50,23 +51,55 @@ export default defineComponent({
                 maxLen: 90
             });
             var reverse = rev(url);
-            this.getDataRestaurant(reverse.str);
+            this.getStepRestaurant(reverse.str);
+            this.getListRestaurant(reverse.str);
           }else{
-            this.step ='main';
+            this.stepMain ='error';
           }
         },
-        getDataRestaurant: function (id) {
-          HTTP.post('/api/restaurant', {
+        getStepRestaurant: function (id) {
+          HTTP.post('/api/tipoplato', {
             id: id
           })
           .then(response => {
-            console.log(response.data);
-            this.posts = response.data;
+            for (const key in response.data) {
+              if (Object.hasOwnProperty.call(response.data, key)) {
+                const element = response.data[key];
+                this.stepAux.push({
+                  webId:element.IdTipoPlato,
+                  name:element.NombreTipo,
+                  code:"00"+(parseInt(key)+1)
+                })
+              }
+            }
           })
           .catch(e => {
             this.errors.push(e)
           })
+        },
+        getListRestaurant: function (id){
+          HTTP.post('/api/restaurant', {
+              id: id
+            })
+            .then(response => {
+              for (const key in response.data) {
+                if (Object.hasOwnProperty.call(response.data, key)) {
+                  const element = response.data[key];
+                  this.itemsListAux.push({
+                    id:element.IdPlato,
+                    name:element.NombrePlato,
+                    description:element.detalle,
+                    price:element.Precio,
+                    img:element.URLImagen,
+                    idTipoPlato:element.IdTipoPlato
+                  })
+                }
+              }
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
         }
-      }
+      },
 });
 </script>

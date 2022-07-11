@@ -12,7 +12,7 @@
           <p class="text-description">{{itm.description}}</p>
           <ion-badge color="primary" v-if="$parent != null">{{$parent.formatPrice(itm.price)+" "+stepInfo.typeMoney}}</ion-badge>
         </ion-label>
-        <ion-img :src="itm.img" class="size-img" @click="selectedImg(itm)"></ion-img>
+        <ion-img :src="errorLoad?notFoundUrl:itm.img" @ionError="notFoundImage" class="size-img" @click="selectedImg(itm)"></ion-img>
       </ion-item-divider>
     </ion-list>
     <card-img ref="cardImage" class="card-img" :value-minus="valueMinus" :data-selected="dataSelected"></card-img>
@@ -25,14 +25,16 @@ import { IonLabel, IonImg, IonBadge, IonToolbar, IonHeader, IonContent, IonItemD
 import CardImg from './CardImg.vue'
 
 export default defineComponent({
-  name: 'List-item',
+  name: 'list-item',
   components: {
     IonLabel, IonImg, IonBadge, IonToolbar, IonHeader, IonContent, IonItemDivider, IonList, IonTitle, CardImg
   },
   data(){
     return{
       dataSelected:{},
-      valueMinus:0
+      valueMinus:0,
+      errorLoad:false,
+      notFoundUrl:"/assets/icon/not_image.png"
     }
   },
   props: {
@@ -55,6 +57,9 @@ export default defineComponent({
     },
   },
   methods:{
+    notFoundImage: function(){
+      this.errorLoad=true;
+    },
     selectedImg (row: any){
         if(typeof row.quantity != "undefined"){
           this.valueMinus = row.quantity;

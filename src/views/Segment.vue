@@ -33,28 +33,6 @@ export default defineComponent({
     return {
       totalAmount: 0,
       stepSelected: '001',
-      step: [
-        {
-          name: 'Entrada',
-          code: '001'
-        },
-        {
-          name: 'Plato Fondo',
-          code: '002'
-        },
-        {
-          name: 'Postre',
-          code: '003'
-        },
-        {
-          name: 'Bebidas',
-          code: '004'
-        },
-        {
-          name: 'Jugos',
-          code: '005'
-        }
-      ],
       stepInfo: {
         title: "Hamburguesas",
         code: "001",
@@ -63,29 +41,20 @@ export default defineComponent({
       listOrder:[
         
       ],
-      itemsList: [
-        {
-          id:1,
-          name: 'Churrasco Italiano',
-          description: 'carne, tomate, palta, mayo',
-          price: 10000,
-          img: "/assets/icon/italiano.jpg",
-        },
-        {
-          id:2,
-          name: 'Churrasco Chacarero',
-          description: 'carne, tomate, porotos verdes, aji verde, mayo',
-          price: 11100,
-          img: "/assets/icon/chacarero.png",
-        },
-        {
-          id:3,
-          name: 'Churrasco Luquito',
-          description: 'carne, extra queso',
-          price: 10000,
-          img: "/assets/icon/luco.jpg",
-        }
-      ],
+    }
+  },
+  props: {
+    'step':{
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
+    'items-list':{
+      type: Object,
+      default: function () {
+        return {}
+      }
     }
   },
   methods: {

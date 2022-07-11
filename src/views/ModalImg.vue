@@ -1,7 +1,7 @@
 <template>
   <ion-header class="size-header">
     <ion-toolbar>
-      <ion-img :src="data.img" class="card-img-model"></ion-img>
+      <ion-img :src="errorLoad?notFoundUrl:data.img" @ionError="notFoundImage" class="card-img-model"></ion-img>
       <ion-title class="card-title">{{ data.name }}</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -28,6 +28,17 @@ export default defineComponent({
     valueMinus:{
       type:Number,
       default:0
+    }
+  },
+  data(){
+    return{
+      errorLoad:false,
+      notFoundUrl:"/assets/icon/not_image.png"
+    }
+  },
+  methods:{
+    notFoundImage: function(){
+      this.errorLoad=true;
     }
   },
   components: { IonContent, IonHeader, IonTitle, IonToolbar, IonImg, PlusMinusField }

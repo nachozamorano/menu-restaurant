@@ -1,5 +1,5 @@
 <template>
-    <ion-img src="/assets/icon/error.png"></ion-img>
+    <ion-img src="/assets/icon/error.png" class="center"></ion-img>
 </template>
 <script>
 import { IonImg } from '@ionic/vue';
