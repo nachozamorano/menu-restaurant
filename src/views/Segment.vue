@@ -8,13 +8,13 @@
     </div>
   </ion-segment>
   <ion-img src="/assets/icon/fast-food-outline.svg" class="logo-icon"></ion-img>
-  <list-item :step-info="stepInfo" :items-list="itemsList" ref="list"></list-item>
+  <list-item :step-info="stepInfo" :items-list="filterList" ref="list"></list-item>
   <div class="size-button-div">
     <ion-text class="total-amount">Monto: {{ formatPrice(totalAmount) + " " + stepInfo.typeMoney }}</ion-text>
     <div class="button-div">
       <ion-button @click="backClick" color="light" v-show="stepSelected != '001'" class="style-back">Volver</ion-button>
       <ion-button @click="nextClick" color="success" v-if="stepSelected != '00' + step.length">Continuar</ion-button>
-      <ion-button @click="finishClick" color="success" v-else>Confirmar Pedido</ion-button>
+      <ion-button @click="finishClick" color="success" :disabled="totalAmount == 0" v-else>Confirmar Pedido</ion-button>
     </div>
   </div>
 </template>
@@ -33,14 +33,13 @@ export default defineComponent({
     return {
       totalAmount: 0,
       stepSelected: '001',
+      filterList:[],
       stepInfo: {
-        title: "Hamburguesas",
+        title: "Menu",
         code: "001",
         typeMoney: "CLP"
       },
-      listOrder:[
-        
-      ],
+      listOrder:[],
     }
   },
   props: {
@@ -51,27 +50,30 @@ export default defineComponent({
       }
     },
     'items-list':{
-      type: Object,
-      default: function () {
-        return {}
-      }
+      type: Array,
+      default: () => []
+    }
+  },
+  watch: {
+    stepSelected: function(){
+      this.filterItemList();
     }
   },
   methods: {
-    formatPrice(number: any) {
+    formatPrice: function(number: any) {
       if (!number) {
         number = 0;
       }
       return number.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
     },
-    updateAmount(check: any, price: any) {
+    updateAmount: function(check: any, price: any) {
       if (check) {
-        this.totalAmount = this.formatPrice(this.unformatString(this.totalAmount) + price);
+        this.totalAmount = this.formatPrice(this.unformatString(this.totalAmount) + price).replace("$","");
       } else {
-        this.totalAmount = this.formatPrice(this.unformatString(this.totalAmount) - price);
+        this.totalAmount = this.formatPrice(this.unformatString(this.totalAmount) - price).replace("$","");
       }
     },
-    unformatString(amount: any) {
+    unformatString: function(amount: any) {
       var parts = amount.toLocaleString('es-CL').match(/(\D+)/g);
       var unformatted = amount;
       if (parts) {
@@ -82,7 +84,7 @@ export default defineComponent({
       return parseFloat(unformatted);
 
     },
-    segmentChanged(ev: CustomEvent) {
+    segmentChanged: function(ev: CustomEvent) {
       //Seguimiento del step
       var id = document.getElementById('segment-' + ev.detail.value);
       if (id) {
@@ -93,21 +95,24 @@ export default defineComponent({
         });
       }
     },
-    nextStep(step: any) {
+    filterItemList: function(){
+        this.filterList = this.itemsList.filter( (itemInArray: { idTipoPlato: string; }) => itemInArray.idTipoPlato == this.stepSelected);
+    },
+    nextStep: function(step: any) {
       step = parseInt(step) + 1;
       return "00" + step;
     },
-    backStep(step: any) {
+    backStep: function(step: any) {
       step = parseInt(step) - 1;
       return "00" + step;
     },
-    finishClick() {
+    finishClick: function() {
       console.log("finish");
     },
-    nextClick() {
+    nextClick: function() {
       this.stepSelected = this.nextStep(this.stepSelected);
     },
-    backClick() {
+    backClick: function() {
       this.stepSelected = this.backStep(this.stepSelected);
     },
   }

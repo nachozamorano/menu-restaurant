@@ -95,6 +95,7 @@ export default defineComponent({
                   })
                 }
               }
+              this.$refs.segment.filterItemList();
             })
             .catch(e => {
               this.errors.push(e)
