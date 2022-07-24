@@ -1,8 +1,9 @@
 <template>
   <ion-app class="display-block">
       <start-page :urlStart="urlStart" v-if="stepMain=='start'" ref="startPage"></start-page>
-      <segment-top v-else-if="stepMain=='main'" :step="stepAux" :items-list="itemsListAux" ref="segment"></segment-top>
-      <page-not-found v-else-if="stepMain=='error'" ref="error"></page-not-found>
+      <segment-top v-else-if="stepMain=='main' && !isBlocked" :step="stepAux" :items-list="itemsListAux" ref="segment"></segment-top>
+      <page-not-found v-else-if="stepMain=='error' && !isBlocked" ref="error"></page-not-found>
+      <page-blocked v-else-if="isBlocked" ref="blocked"></page-blocked>
   </ion-app>
 </template>
 
@@ -11,6 +12,7 @@ import { IonApp } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { HTTP } from './js/http-common';
 import PageNotFound from './views/PageNotFound.vue';
+import pageBlocked from './views/PageBlocked.vue';
 import startPage from './views/StartPage.vue';
 import ReverseMd5 from 'reverse-md5';
 import segmentTop from './views/Segment.vue';
@@ -18,6 +20,7 @@ export default defineComponent({
   name: 'App',
   components: {
     IonApp,
+    pageBlocked,
     PageNotFound,
     startPage,
     segmentTop
@@ -29,6 +32,7 @@ export default defineComponent({
       },
       data(){
         return{
+          isBlocked: false,
           stepMain: 'start',
           urlStart: '/assets/icon/logo.png',
           stepAux:[],
@@ -82,6 +86,14 @@ export default defineComponent({
               id: id
             })
             .then(response => {
+              if(response.data.length != 0){
+                var status = response.data[0].FK_idStatus;
+                if(status == 1){
+                  this.isBlocked = false;
+                }else if(status == 2){
+                  this.isBlocked = true;
+                }
+              }
               for (const key in response.data) {
                 if (Object.hasOwnProperty.call(response.data, key)) {
                   const element = response.data[key];

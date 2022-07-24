@@ -2,14 +2,17 @@
   <ion-segment selectOnFocus scrollable mode="md" v-model="stepSelected" class="segment-w"
     @ionChange="segmentChanged($event)">
     <div v-for="(stp, s) in step" :key="s">
-      <ion-segment-button SwipedTabs :id="'segment-' + stp.code" mode="md" class="step-class" :value="stp.code">
+      <ion-segment-button SwipedTabs :id="'segment-button' + stp.code" mode="md" class="step-class" :value="stp.code">
         <ion-label>{{ stp.name }}</ion-label>
       </ion-segment-button>
     </div>
   </ion-segment>
-  <ion-img src="/assets/icon/fast-food-outline.svg" class="logo-icon"></ion-img>
+  <div id="counter" class="margin-counter" @click="showDetail()">
+    <ion-badge color="primary" class="counter-element">{{counterElement()}}</ion-badge>
+    <ion-img src="/assets/icon/fast-food-outline.svg" class="logo-icon"></ion-img>
+  </div>
   <list-item :step-info="stepInfo" :items-list="filterList" ref="list"></list-item>
-  <div class="size-button-div">
+  <div class="size-button-div index-content">
     <ion-text class="total-amount">Monto: {{ formatPrice(totalAmount) + " " + stepInfo.typeMoney }}</ion-text>
     <div class="button-div">
       <ion-button @click="backClick" color="light" v-show="stepSelected != '001'" class="style-back">Volver</ion-button>
@@ -17,17 +20,19 @@
       <ion-button @click="finishClick" color="success" :disabled="totalAmount == 0" v-else>Confirmar Pedido</ion-button>
     </div>
   </div>
+  <list-item-detail :list-order="listOrder"></list-item-detail>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonSegment, IonLabel, IonSegmentButton, IonImg, IonText, IonButton } from '@ionic/vue';
+import { IonSegment, IonLabel, IonSegmentButton, IonImg, IonText, IonButton, IonBadge, menuController } from '@ionic/vue';
+import ListItemDetail from './listItemDetail.vue'
 import ListItem from './ListItem.vue'
 export default defineComponent({
   inheritAttrs: false,
   name: 'segment-top',
   components: {
-    IonSegment, IonLabel, IonSegmentButton, ListItem, IonImg, IonText, IonButton
+    IonSegment, IonLabel, IonSegmentButton, ListItem, IonImg, IonText, IonButton, IonBadge, ListItemDetail,
   },
   data() {
     return {
@@ -60,6 +65,19 @@ export default defineComponent({
     }
   },
   methods: {
+    showDetail: function(){
+      menuController.open("list-detail")
+    },
+    counterElement: function(){
+      var count = 0;
+      for (const key in this.listOrder) {
+        if (Object.prototype.hasOwnProperty.call(this.listOrder, key)) {
+          count += this.listOrder[key].quantity;
+          
+        }
+      }
+      return count;
+    },
     formatPrice: function(number: any) {
       if (!number) {
         number = 0;

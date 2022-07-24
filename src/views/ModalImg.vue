@@ -1,7 +1,9 @@
 <template>
   <ion-header class="size-header">
-    <ion-toolbar>
-      <ion-img :src="errorLoad?notFoundUrl:data.img" @ionError="notFoundImage" class="card-img-model"></ion-img>
+    <ion-toolbar class="text-align-center">
+      <div class="display-inline-table">
+        <ion-img :src="errorLoad?notFoundUrl:data.img" @ionError="notFoundImage" class="card-img-model max-img-modal"></ion-img>
+      </div>
       <ion-title class="card-title">{{ data.name }}</ion-title>
     </ion-toolbar>
   </ion-header>

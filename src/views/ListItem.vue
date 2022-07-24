@@ -4,7 +4,7 @@
       <ion-title size="large" class="title-step">{{stepInfo.title}}</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding size-content">
+  <ion-content class="ion-padding size-content index-content">
     <ion-list v-for="(itm, i) in itemsList" :key="i">
       <ion-item-divider class="item-divider-list">
         <ion-label class="ion-label-list" @click="selectedImg(itm)">
