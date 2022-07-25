@@ -3,6 +3,22 @@
   margin-right: auto;
   width: 50%;
 }
+.text-qr{
+  display: flow-root;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.link-detail{
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.display-grid{
+  display:grid;
+}
+.button-qr{
+  justify-self: center;
+}
 .height-max{
   height: 100%;
 }

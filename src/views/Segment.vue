@@ -18,13 +18,18 @@
       <div class="button-div">
         <ion-button @click="backClick" color="light" v-show="stepSelected != '001'" class="style-back">Volver</ion-button>
         <ion-button @click="nextClick" color="success" v-if="stepSelected != '00' + step.length">Continuar</ion-button>
-        <ion-button @click="finishClick" color="success" :disabled="totalAmount == 0" v-else>Confirmar Pedido</ion-button>
+        <ion-button @click="finishClick" color="success" :disabled="totalAmount == 0" v-else>Confirmar</ion-button>
       </div>
     </div>
     <list-item-detail :list-order="listOrder"></list-item-detail>
   </div>
   <div v-else class="vertical-center">
+    <ion-text class="text-qr">Muestre este codigo QR para realizar su pedido</ion-text>
     <vue-qrcode :value="JSON.stringify(listOrder)" :options="{ width: 200 }"></vue-qrcode>
+    <div class="display-grid">
+      <a class="link-detail"> Ver Detalle </a>
+      <ion-button @click="modOrder" color="primary" class="button-qr">Modificar Pedido</ion-button>
+    </div>
   </div>
 </template>
 
@@ -72,6 +77,9 @@ export default defineComponent({
     }
   },
   methods: {
+    modOrder:function(){
+      this.confirmOrder=false;
+    },
     showDetail: function(){
       menuController.open("list-detail")
     },
