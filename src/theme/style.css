@@ -3,6 +3,9 @@
   margin-right: auto;
   width: 50%;
 }
+.height-max{
+  height: 100%;
+}
 .index-content{
   z-index:12;
 }
