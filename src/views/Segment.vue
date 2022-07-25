@@ -24,10 +24,10 @@
     <list-item-detail :list-order="listOrder"></list-item-detail>
   </div>
   <div v-else class="vertical-center">
-    <ion-text class="text-qr">Muestre este codigo QR para realizar su pedido</ion-text>
+    <ion-text class="text-qr">Muestre este codigo QR para realizar su pedido.</ion-text>
     <vue-qrcode :value="JSON.stringify(listOrder)" :options="{ width: 200 }"></vue-qrcode>
     <div class="display-grid">
-      <a class="link-detail"> Ver Detalle </a>
+      <a class="link-detail">Ver Detalle</a>
       <ion-button @click="modOrder" color="primary" class="button-qr">Modificar Pedido</ion-button>
     </div>
   </div>
