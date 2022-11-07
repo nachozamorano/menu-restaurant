@@ -1,7 +1,8 @@
 <template>
   <ion-app class="display-block">
       <start-page :urlStart="urlStart" v-if="stepMain=='start'" ref="startPage"></start-page>
-      <segment-top v-else-if="stepMain=='main' && !isBlocked" :step="stepAux" :items-list="itemsListAux" ref="segment"></segment-top>
+      <segment-top v-else-if="stepMain=='main' && !isBlocked" :step="stepAux" :num-table="numTable" :id-restaurant="idRestaurant" :items-list="itemsListAux" ref="segment"></segment-top>
+      <success-order v-else-if="stepMain=='success' && !isBlocked"></success-order>
       <page-not-found v-else-if="stepMain=='error' && !isBlocked" ref="error"></page-not-found>
       <page-blocked v-else-if="isBlocked" ref="blocked"></page-blocked>
   </ion-app>
@@ -14,6 +15,7 @@ import { HTTP } from './js/http-common';
 import PageNotFound from './views/PageNotFound.vue';
 import pageBlocked from './views/PageBlocked.vue';
 import startPage from './views/StartPage.vue';
+import successOrder from './views/successOrder.vue';
 import ReverseMd5 from 'reverse-md5';
 import segmentTop from './views/Segment.vue';
 export default defineComponent({
@@ -22,6 +24,7 @@ export default defineComponent({
     IonApp,
     pageBlocked,
     PageNotFound,
+    successOrder,
     startPage,
     segmentTop
     },
@@ -35,10 +38,12 @@ export default defineComponent({
           isBlocked: false,
           stepMain: 'start',
           urlStart: '/assets/icon/logo.png',
+          numTable: "1",
           stepAux:[],
           itemsListAux:[],
           errors: [],
-          timeInitial: 2000
+          timeInitial: 2000,
+          idRestaurant:""
           }
       },
       methods: {
@@ -55,15 +60,16 @@ export default defineComponent({
                 maxLen: 90
             });
             var reverse = rev(url);
+            this.idRestaurant = reverse.str;
             this.getStepRestaurant(reverse.str);
             this.getListRestaurant(reverse.str);
           }else{
             this.stepMain ='error';
           }
         },
-        getStepRestaurant: function (id) {
+        getStepRestaurant: function () {
           HTTP.post('/api/tipoplato', {
-            id: id
+            id: this.idRestaurant
           })
           .then(response => {
             for (const key in response.data) {
@@ -81,9 +87,9 @@ export default defineComponent({
             this.errors.push(e)
           })
         },
-        getListRestaurant: function (id){
+        getListRestaurant: function (){
           HTTP.post('/api/restaurant', {
-              id: id
+              id: this.idRestaurant
             })
             .then(response => {
               if(response.data.length != 0){

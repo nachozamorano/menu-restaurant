@@ -36,6 +36,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonSegment, IonLabel, IonSegmentButton, IonImg, IonText, IonButton, IonBadge, menuController } from '@ionic/vue';
+import { HTTP } from '../js/http-common';
 import ListItemDetail from './listItemDetail.vue'
 import ListItem from './ListItem.vue'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
@@ -57,6 +58,7 @@ export default defineComponent({
         typeMoney: "CLP"
       },
       listOrder:[],
+      consultOrder:""
     }
   },
   props: {
@@ -69,11 +71,28 @@ export default defineComponent({
     'items-list':{
       type: Array,
       default: () => []
+    },
+    'num-table':{
+      type:String,
+      default:""
+    },
+    'id-restaurant':{
+      type:String,
+      default:""
     }
   },
   watch: {
     stepSelected: function(){
       this.filterItemList();
+    },
+    confirmOrder: function(val){
+      if(val){
+        this.$nextTick(() => {
+          this.consultOrder = setInterval(this.consultIfReadQr(), 2000);
+        });
+      }else{
+        clearInterval(this.consultOrder);
+      }
     }
   },
   methods: {
@@ -141,6 +160,21 @@ export default defineComponent({
     },
     finishClick: function() {
       this.confirmOrder=true;
+    },
+    consultIfReadQr:function() {
+      HTTP.post('/api/orden/estado', {
+        id: this.idRestaurant,
+        num: this.numTable
+      })
+      .then(response => {
+        if(response.data[0].FK_IdEstado == 1){
+          clearInterval(this.consultOrder);
+          this.$root.stepMain = "success";
+        }
+      })
+      .catch(e => {
+        this.$root.errors.push(e)
+      });
     },
     nextClick: function() {
       this.stepSelected = this.nextStep(this.stepSelected);
