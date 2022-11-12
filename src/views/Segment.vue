@@ -102,9 +102,10 @@ export default defineComponent({
       return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"numTable": this.numTable}]);
     },
     modOrder:function(){
-      HTTP.post('/api/mesa/libre', {
+      HTTP.post('/api/mesa/actualizarEstado', {
             id: this.idRestaurant,
-            num: this.numTable
+            num: this.numTable,
+            status: "1"
           })
           .then(response => {
             this.confirmOrder=false;
@@ -173,9 +174,10 @@ export default defineComponent({
       return "00" + step;
     },
     finishClick: function() {
-      HTTP.post('/api/mesa/tomarPedido', {
+      HTTP.post('/api/mesa/actualizarEstado', {
             id: this.idRestaurant,
-            num: this.numTable
+            num: this.numTable,
+            status: "2"
           })
           .then(response => {
                 this.confirmOrder=true;
