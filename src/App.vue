@@ -68,7 +68,7 @@ export default defineComponent({
           }
         },
         getStepRestaurant: function () {
-          HTTP.post('/api/tipoplato', {
+          HTTP.post('/api/tipoPlato', {
             id: this.idRestaurant
           })
           .then(response => {

@@ -159,15 +159,24 @@ export default defineComponent({
       return "00" + step;
     },
     finishClick: function() {
-      this.confirmOrder=true;
+      HTTP.post('/api/mesa/tomarPedido', {
+            id: this.idRestaurant,
+            num: this.numTable
+          })
+          .then(response => {
+                this.confirmOrder=true;
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
     },
     consultIfReadQr:function() {
-      HTTP.post('/api/orden/estado', {
+      HTTP.post('/api/mesa/estado', {
         id: this.idRestaurant,
         num: this.numTable
       })
       .then(response => {
-        if(response.data[0].FK_IdEstado == 1){
+        if(response.data[0].FK_IdEstadoMesa == 3){
           clearInterval(this.consultOrder);
           this.$root.stepMain = "success";
         }
