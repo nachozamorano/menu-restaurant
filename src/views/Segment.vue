@@ -99,7 +99,7 @@ export default defineComponent({
   },
   methods: {
     dataQrOrder: function(){
-      return JSON.stringify(this.listOrder) + "{"+this.idRestaurant+"}," + "{"+this.numTable+"}";
+      return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"idRestaurant": this.idRestaurant,"numTable": this.numTable}]);
     },
     modOrder:function(){
       HTTP.post('/api/mesa/libre', {
@@ -130,7 +130,7 @@ export default defineComponent({
       if (!number) {
         number = 0;
       }
-      return number.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+      return number.toLocaleString('es-CL', { style: 'currency', currency: this.stepInfo.typeMoney });
     },
     updateAmount: function(check: any, price: any) {
       if (check) {
