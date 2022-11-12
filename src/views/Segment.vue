@@ -25,7 +25,7 @@
   </div>
   <div v-else class="vertical-center">
     <ion-text class="text-qr">Muestre este codigo QR para realizar su pedido.</ion-text>
-    <vue-qrcode :value="JSON.stringify(listOrder)" :options="{ width: 200 }"></vue-qrcode>
+    <vue-qrcode :value="dataQrOrder()" :options="{ width: 200 }"></vue-qrcode>
     <div class="display-grid">
       <a class="link-detail">Ver Detalle</a>
       <ion-button @click="modOrder" color="primary" class="button-qr">Modificar Pedido</ion-button>
@@ -98,6 +98,9 @@ export default defineComponent({
     }
   },
   methods: {
+    dataQrOrder: function(){
+      return JSON.stringify(this.listOrder) + "{"+this.idRestaurant+"}," + "{"+this.numTable+"}";
+    },
     modOrder:function(){
       HTTP.post('/api/mesa/libre', {
             id: this.idRestaurant,
@@ -187,7 +190,6 @@ export default defineComponent({
         num: this.numTable
       })
       .then(response => {
-        debugger
         if(response.data[0].FK_IdEstadoMesa == 3){
           clearInterval(this.consultOrder);
           this.$root.stepMain = "success";
