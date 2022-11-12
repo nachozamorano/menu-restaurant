@@ -99,7 +99,7 @@ export default defineComponent({
   },
   methods: {
     dataQrOrder: function(){
-      return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"idRestaurant": this.idRestaurant,"numTable": this.numTable}]);
+      return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"numTable": this.numTable}]);
     },
     modOrder:function(){
       HTTP.post('/api/mesa/libre', {
