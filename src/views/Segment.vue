@@ -88,7 +88,9 @@ export default defineComponent({
     confirmOrder: function(val){
       if(val){
         this.$nextTick(() => {
-          this.consultOrder = setInterval(this.consultIfReadQr(), 2000);
+          this.consultOrder = setInterval(function() {
+            this.consultIfReadQr();
+          }.bind(this), 2000);
         });
       }else{
         clearInterval(this.consultOrder);
@@ -97,7 +99,16 @@ export default defineComponent({
   },
   methods: {
     modOrder:function(){
-      this.confirmOrder=false;
+      HTTP.post('/api/mesa/libre', {
+            id: this.idRestaurant,
+            num: this.numTable
+          })
+          .then(response => {
+            this.confirmOrder=false;
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
     },
     showDetail: function(){
       menuController.open("list-detail")
@@ -176,6 +187,7 @@ export default defineComponent({
         num: this.numTable
       })
       .then(response => {
+        debugger
         if(response.data[0].FK_IdEstadoMesa == 3){
           clearInterval(this.consultOrder);
           this.$root.stepMain = "success";
