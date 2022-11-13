@@ -35,7 +35,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonSegment, IonLabel, IonSegmentButton, IonImg, IonText, IonButton, IonBadge, menuController } from '@ionic/vue';
+import { IonSegment, IonLabel, IonSegmentButton, IonImg, IonText, IonButton, IonBadge, menuController, toastController  } from '@ionic/vue';
+import { alertOutline } from 'ionicons/icons';
 import { HTTP } from '../js/http-common';
 import ListItemDetail from './listItemDetail.vue'
 import ListItem from './ListItem.vue'
@@ -198,11 +199,23 @@ export default defineComponent({
         }else if(response.data[0].FK_IdEstadoMesa == 5){
           clearInterval(this.consultOrder);
           this.confirmOrder = false;
+          this.presentToast("Orden Cancelada", "top", 2000), "danger";
         }
       })
       .catch(e => {
         this.$root.errors.push(e)
       });
+    },
+    async presentToast(msg, pos, time, color) {
+      const toast = await toastController.create({
+        message: msg,
+        duration: time,
+        position: pos,
+        color: color,
+        icon: alertOutline
+      });
+
+      await toast.present();
     },
     nextClick: function() {
       this.stepSelected = this.nextStep(this.stepSelected);
