@@ -16,9 +16,9 @@
     <div class="size-button-div index-content">
       <ion-text class="total-amount">Monto: {{ formatPrice(totalAmount) + " " + stepInfo.typeMoney }}</ion-text>
       <div class="button-div">
-        <ion-button @click="backClick" color="light" v-show="stepSelected != '001'" class="style-back">Volver</ion-button>
-        <ion-button @click="nextClick" color="success" v-if="stepSelected != '00' + step.length">Continuar</ion-button>
-        <ion-button @click="finishClick" color="success" :disabled="totalAmount == 0" v-else>Confirmar</ion-button>
+        <ion-button @click="backClick()" color="light" v-show="stepSelected != '001'" class="style-back">Volver</ion-button>
+        <ion-button @click="nextClick()" color="success" v-if="stepSelected != '00' + step.length">Continuar</ion-button>
+        <ion-button @click="finishClick()" color="success" :disabled="totalAmount == 0" v-else>Confirmar</ion-button>
       </div>
     </div>
     <list-item-detail :list-order="listOrder"></list-item-detail>
@@ -28,7 +28,7 @@
     <vue-qrcode :value="dataQrOrder()" :options="{ width: 200 }"></vue-qrcode>
     <div class="display-grid">
       <a class="link-detail">Ver Detalle</a>
-      <ion-button @click="modOrder" color="primary" class="button-qr">Modificar Pedido</ion-button>
+      <ion-button @click="modOrder()" color="primary" class="button-qr">Modificar Pedido</ion-button>
     </div>
   </div>
 </template>
@@ -195,6 +195,9 @@ export default defineComponent({
         if(response.data[0].FK_IdEstadoMesa == 3){
           clearInterval(this.consultOrder);
           this.$root.stepMain = "success";
+        }else if(response.data[0].FK_IdEstadoMesa == 5){
+          clearInterval(this.consultOrder);
+          this.confirmOrder = false;
         }
       })
       .catch(e => {
