@@ -1,7 +1,8 @@
 <template>
   <ion-app class="display-block">
-      <start-page :urlStart="urlStart" v-if="stepMain=='start'" ref="startPage"></start-page>
-      <segment-top v-else-if="stepMain=='main' && !isBlocked" :step="stepAux" :num-table="numTable" :id-restaurant="idRestaurant" :items-list="itemsListAux" ref="segment"></segment-top>
+      <segment-top v-show="stepMain=='main' && !isBlocked" :step="stepAux" :num-table="numTable" :id-restaurant="idRestaurant" :user-name="userName" :items-list="itemsListAux" ref="segment"></segment-top>
+      <insert-name v-show="stepMain=='insertName' && !isBlocked" ref="insertName"></insert-name>
+      <start-page v-if="stepMain=='start'" :urlStart="urlStart" ref="startPage"></start-page>
       <success-order v-else-if="stepMain=='success' && !isBlocked"></success-order>
       <page-not-found v-else-if="stepMain=='error' && !isBlocked" ref="error"></page-not-found>
       <page-blocked v-else-if="isBlocked" ref="blocked"></page-blocked>
@@ -18,6 +19,7 @@ import startPage from './views/StartPage.vue';
 import successOrder from './views/successOrder.vue';
 import ReverseMd5 from 'reverse-md5';
 import segmentTop from './views/Segment.vue';
+import insertName from './views/insertName.vue';
 export default defineComponent({
   name: 'App',
   components: {
@@ -26,7 +28,8 @@ export default defineComponent({
     PageNotFound,
     successOrder,
     startPage,
-    segmentTop
+    segmentTop,
+    insertName
     },
       created: function (){
         setTimeout(function() {
@@ -43,14 +46,20 @@ export default defineComponent({
           itemsListAux:[],
           errors: [],
           timeInitial: 2000,
-          idRestaurant:""
+          idRestaurant:"",
+          userName:""
           }
+      },
+      watch:{
+        stepMain:function(){
+          this.$forceUpdate();
+        }
       },
       methods: {
         startWeb: function (){
           var url = this.$route.query.access;
           if(typeof url != "undefined"){
-            this.stepMain ='main';
+            this.stepMain ='insertName';
             var rev = ReverseMd5({
                 lettersUpper: true,
                 lettersLower: true,

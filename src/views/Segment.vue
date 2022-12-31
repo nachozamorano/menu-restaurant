@@ -80,6 +80,10 @@ export default defineComponent({
     'id-restaurant':{
       type:String,
       default:""
+    },
+    'user-name':{
+      type:String,
+      default:""
     }
   },
   watch: {
@@ -100,7 +104,7 @@ export default defineComponent({
   },
   methods: {
     dataQrOrder: function(){
-      return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"numTable": this.numTable}]);
+      return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"numTable": this.numTable,"totalAmount": this.totalAmount,"nombre": this.userName}]);
     },
     modOrder:function(){
       HTTP.post('/api/mesa/actualizarEstado', {

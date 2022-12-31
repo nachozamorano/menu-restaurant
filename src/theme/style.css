@@ -165,6 +165,16 @@ ion-img.card-img-model::part(image){
   margin-top: 10px;
 
 }
+.arrow-forward-circle-outline{
+  background-image: url(../icons/arrow-forward-circle-outline.svg);
+  background-repeat: no-repeat;  
+  cursor: pointer;
+  float: right;
+  width: 40px;
+  height: 40px;
+  margin-top: 10px;
+
+}
 /* ESTILOS POR DEFECTO */
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
@@ -276,9 +286,9 @@ ion-menu.ios ion-note {
 }
 
 ion-note {
-  display: inline-block;
   font-size: 16px;
-
+}
+::slotted([slot="helper"]){
   color: var(--ion-color-medium-shade);
 }
 
@@ -355,4 +365,10 @@ ion-item.selected {
 }
 .align-center{
   text-align: center;
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
