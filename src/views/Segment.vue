@@ -104,7 +104,7 @@ export default defineComponent({
   },
   methods: {
     dataQrOrder: function(){
-      return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"numTable": this.numTable,"totalAmount": this.totalAmount,"nombre": this.userName}]);
+      return JSON.stringify(this.listOrder) + "/dataBase/"+JSON.stringify([{"numTable": this.numTable,"subTotalAmount": this.totalAmount,"nombre": this.userName}]);
     },
     modOrder:function(){
       HTTP.post('/api/mesa/actualizarEstado', {
